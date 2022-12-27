@@ -1,0 +1,101 @@
+// using callbacks
+const Training = function(cb) {
+    setTimeout(() => {
+        console.log("enroll in a training program");
+        cb && cb();
+    }, 3000)
+}
+
+const backEnd = function(cb) {
+    setTimeout(() => {
+        console.log("master backend to get min 5lpa");
+        cb && cb();
+    }, 2000)
+}
+
+const frontEnd = function() {
+    setTimeout(() => {
+        console.log("now master frontEnd to get min 10lpa");
+    }, 1000);
+}
+
+Training(backEnd(frontEnd));
+
+// using promises
+const Training = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("enroll in a training program");
+        }, 3000)
+    })
+}
+
+const backEnd = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("master backend to get min 5lpa");
+        }, 2000)
+    })
+}
+
+
+const frontEnd = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("now master frontEnd to get min 10lpa");
+        }, 1000);
+    })
+}
+
+Training().then((message) => {
+    console.log(message);
+    backEnd().then((message) => {
+        console.log(message);
+        frontEnd().then((message) => {
+            console.log(message);
+        })
+    })
+})
+
+// Using Async await
+const Training = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("enroll in a training program");
+        }, 3000)
+    })
+}
+
+const backEnd = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("master backend to get min 5lpa");
+        }, 2000)
+    })
+}
+
+
+const frontEnd = function() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve("now master frontEnd to get min 10lpa");
+        }, 1000);
+    })
+}
+
+
+async function placementJourney() {
+    try{
+        let trainingPhase = await Training();
+        console.log(trainingPhase);
+        let backEndPhase = await backEnd();
+        console.log(backEndPhase);
+        let frontEndPhase = await frontEnd();
+        console.log(frontEndPhase);
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+placementJourney();
